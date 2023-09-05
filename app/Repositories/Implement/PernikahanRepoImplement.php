@@ -21,9 +21,15 @@ class PernikahanRepoImplement implements PernikahanRepository
         }])->get();
     }
 
-    public function getByUnit(int $idUnit) : Collection
+    public function getByUnit(int $idUnit, ?int $limit = null) : Collection
     {
-        return $this->pernikahanModel->where('id_unit', $idUnit)->get();
+        $query = $this->pernikahanModel->query();
+        $query = $query->where('id_unit', $idUnit)->orderBy('created_at', 'DESC');
+        if($limit)
+        {
+            $query = $query->limit($limit);
+        }
+        return $query->get();
     }
 
     public function tambah(array $data) : Pernikahan | null

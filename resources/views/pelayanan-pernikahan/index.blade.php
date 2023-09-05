@@ -46,7 +46,7 @@
                             </div>
                             <div class="col-md-12">
                                 <label for="inputUnit" class="form-label">Unit</label>
-                                <select type="date" class="form-control" id="inputUnit" name="id_unit" >
+                                <select type="date" class="form-control" id="inputUnit" name="id_unit">
                                     @foreach ($unit as $item)
                                     <option value="{{ $item->id }}">{{ $item->nama_unit }}</option>
                                     @endforeach
@@ -76,17 +76,17 @@
                 </thead>
                 <tbody>
                     @foreach ($pernikahan as $item)
-                        <tr>
-                            <td>{{ $item->nama_pria }}</td>
-                            <td>{{ $item->nama_wanita }}</td>
-                            <td>{{ $item->tanggal }}</td>
-                            <td>{{ $item->jam }}</td>
-                            <td>{{ $item->unit->nama_unit }}</td>
-                            <td>{{ $item->alamat }}</td>
-                            <td>
-                                <button class="btn btn-danger btn-sm text-end"><i class="bx bx-trash"></i></button>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>{{ $item->nama_pria }}</td>
+                        <td>{{ $item->nama_wanita }}</td>
+                        <td>{{ $item->tanggal }}</td>
+                        <td>{{ $item->jam }}</td>
+                        <td>{{ $item->unit->nama_unit }}</td>
+                        <td>{{ $item->alamat }}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm text-end"><i class="bx bx-trash"></i></button>
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>

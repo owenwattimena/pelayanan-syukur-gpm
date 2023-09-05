@@ -6,11 +6,13 @@ use App\Services\AdminService;
 use App\Services\Implement\AdminServiceImplement;
 use App\Services\Implement\KelahiranServiceImplement;
 use App\Services\Implement\PernikahanServiceImplement;
+use App\Services\Implement\PushNotificationServiceImplement;
 use App\Services\Implement\SektorServiceImplement;
 use App\Services\Implement\UnitServiceImplement;
 use App\Services\Implement\UserServiceImplement;
 use App\Services\KelahiranService;
 use App\Services\PernikahanService;
+use App\Services\PushNotificationService;
 use App\Services\SektorService;
 use App\Services\UnitService;
 use App\Services\UserService;
@@ -43,6 +45,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->bind(UserService::class, function(Application $app){
             return $app->make(UserServiceImplement::class);
+        });
+        $this->app->bind(PushNotificationService::class, function(Application $app){
+            return $app->make(PushNotificationServiceImplement::class);
         });
     }
 

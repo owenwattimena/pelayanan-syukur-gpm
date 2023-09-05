@@ -25,10 +25,10 @@ return [
     | can be set via environment variables when that is more convenient.
     |
     */
-
-    'private_key' => env('PASSPORT_PRIVATE_KEY'),
-
-    'public_key' => env('PASSPORT_PUBLIC_KEY'),
+    // file_get_contents(storage_path('oauth-private.key'))
+    'private_key' => env('PASSPORT_PRIVATE_KEY', ),
+    // file_get_contents(storage_path('oauth-public.key'))
+    'public_key' => env('PASSPORT_PUBLIC_KEY',),
 
     /*
     |--------------------------------------------------------------------------

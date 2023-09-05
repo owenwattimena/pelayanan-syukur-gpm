@@ -15,4 +15,13 @@ class AdminRepoImplement implements AdminRepository
     public function daftar(array $data) : Admin|null{
         return $this->adminModel->create($data);
     }
+
+    public function ubah(array $data, int $id) : bool
+    {
+        return $this->adminModel->where('id', $id)->update($data);
+    }
+    public function hapus(int $id) : bool
+    {
+        return $this->adminModel->destroy($id) > 0;
+    }
 }

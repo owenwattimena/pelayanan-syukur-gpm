@@ -37,7 +37,7 @@ class UserController extends Controller
 
             if(!$user->email_verified_at)
                 return JsonFormatter::error("Email belum diverifikasi.", code: 403);
-            $token = $user->createToken('user_token')->accessToken;
+            $token = $user->createToken('user_token')->plainTextToken;;
             $user['id_unit'] = $user->unit->first()->id;
             return JsonFormatter::success(
                 [
@@ -89,6 +89,34 @@ class UserController extends Controller
             return JsonFormatter::error("Proses pendaftaran gagal. " . $e->getMessage());
         }
 
+    }
+
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->input(), [
+            "nama_lengkap" => "required",
+            "email" => "required",
+            "telepon" => "required"
+        ]);
+
+        if ($validator->fails()) {
+            return JsonFormatter::error("Data tidak lengkap.", data: $validator->errors()->all());
+        }
+
+        try {
+            $user = $request->user();
+            $user->nama_lengkap = $request->nama_lengkap;
+            $user->email = $request->email;
+            $user->telepon = $request->telepon;
+            if($user->save())
+            {
+                $user['id_unit'] = $user->unit->first()->id;
+                return JsonFormatter::success(["user" => $user], message: "Berhasil mengubah profile.");
+            }
+            return JsonFormatter::success([], message: "Gagal mengubah profile.");
+        } catch (\Exception $e) {
+            return JsonFormatter::success([], message: "Gagal mengubah profile. " . $e->getMessage());
+        }
     }
 
     public function logout(Request $request)

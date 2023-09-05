@@ -27,4 +27,10 @@ class SektorController extends Controller
         $data = $this->unitService->get($idSektor)->makeHidden(['created_at', 'updated_at']);
         return JsonFormatter::success($data);
     }
+
+    public function detailUnit(Request $request, int $id)
+    {
+        $data = $this->unitService->getById($id);
+        return JsonFormatter::success($data);
+    }
 }

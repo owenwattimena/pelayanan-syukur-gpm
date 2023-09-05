@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->rememberToken();
-            $table->enum('role', ['admin_sektor'])->default('admin_sektor');
+            $table->enum('role', ['admin_jemaat', 'admin_sektor'])->default('admin_sektor');
 
             $table->timestamps();
         });

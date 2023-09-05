@@ -38,8 +38,7 @@
 								<div class="border p-4 rounded">
 									<div class="text-center">
 										<h3 class="">MASUK</h3>
-										<p>Belum memiliki akun? <a href="authentication-signup.html">Daftar di sini.</a>
-										</p>
+										<p>Belum memiliki akun? <a href="{{route('daftar')}}">Daftar di sini.</a></p>
 									</div>
 									<div class="form-body">
 									@if(session('alert'))

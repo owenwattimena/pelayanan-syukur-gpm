@@ -53,3 +53,13 @@ $response = $kernel->handle(
 )->send();
 
 $kernel->terminate($request, $response);
+
+
+// Postgres cluster spring-firefly-5574 created
+//   Username:    postgres
+//   Password:    wSp0b5BQtwvcEFg
+//   Hostname:    spring-firefly-5574.internal
+//   Flycast:     fdaa:2:61cf:0:1::4
+//   Proxy port:  5432
+//   Postgres port:  5433
+//   Connection string: postgres://postgres:wSp0b5BQtwvcEFg@spring-firefly-5574.flycast:5432

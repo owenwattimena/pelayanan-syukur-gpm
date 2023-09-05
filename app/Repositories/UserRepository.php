@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 interface UserRepository
 {
     public function tambah(array $data) : User|null;
+    public function ubah(array $data, int $id) : bool;
 
     public function get(?int $idSektor = null) : Collection;
 

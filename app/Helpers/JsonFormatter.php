@@ -19,7 +19,7 @@ class JsonFormatter{
         self::$format["data"] = $data;
         return response()->json(self::$format, $code);
     }
-    public static function error(String $message = "", ?array $data=null, ?int $code = 400)
+    public static function error(String $message = "", $data=null, ?int $code = 400)
     {
         self::$format["meta"]["code"] = $code;
         self::$format["meta"]["status"] = false;

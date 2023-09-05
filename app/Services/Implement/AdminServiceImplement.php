@@ -18,8 +18,9 @@ class AdminServiceImplement implements AdminService
         $this->sektorRepo = $sektorRepo;
     }
 
-    public function daftar(array $data):bool{
+    public function daftar(array $data, ?string $role = 'admin_sektor'):bool{
         // dd($data);
+        $data['role'] = $role;
         $admin = $this->adminRepo->daftar($data);
         if(!is_numeric($data['sektor'])){
             $sektor = $this->sektorRepo->tambah(["nama_sektor" => $data['sektor']]);

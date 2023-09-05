@@ -18,6 +18,10 @@ class UserRepoImplement implements UserRepository
         return $this->userModel->create($data);
     }
 
+    public function ubah(array $data, int $id) : bool
+    {
+        return $this->userModel->where('id', $id)->update($data);
+    }
     public function get(?int $idSektor = null) : Collection
     {
         return $this->userModel->all();
@@ -26,7 +30,7 @@ class UserRepoImplement implements UserRepository
     public function verifikasi(int $id):bool
     {
         $user = $this->userModel->findOrFail($id);
-        $user->email_verified_at = Carbon::now();
+        $user->ccccc = Carbon::now();
         if($user->save()) return true;
             return false;
     }

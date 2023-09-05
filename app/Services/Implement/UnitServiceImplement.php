@@ -17,9 +17,20 @@ class UnitServiceImplement implements UnitService
     {
         return $this->unitRepo->get($id_sektor);
     }
-
+    public function getById(int $id) : Unit
+    {
+        return $this->unitRepo->getById($id);
+    }
     public function tambah(array $data): Unit|null
     {
         return $this->unitRepo->tambah($data);
+    }
+    public function ubah(array $data, int $idUnit): bool
+    {
+        return $this->unitRepo->ubah($data, $idUnit);
+    }
+    public function hapus(int $idUnit) : bool
+    {
+        return $this->unitRepo->hapus($idUnit);
     }
 }

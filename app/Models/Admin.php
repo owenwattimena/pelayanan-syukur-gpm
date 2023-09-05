@@ -21,6 +21,7 @@ class Admin extends Authenticatable
         'telepon',
         'username',
         'password',
+        'fcm_token',
         'role',
     ];
 

@@ -16,9 +16,9 @@ class PernikahanServiceImplement implements PernikahanService
         return $this->pernikahanRepo->getBySektor($id_sektor);
     }
 
-    public function getByUnit(int $idUnit) : Collection
+    public function getByUnit(int $idUnit, ?int $limit = null) : Collection
     {
-        return $this->pernikahanRepo->getByUnit($idUnit);
+        return $this->pernikahanRepo->getByUnit($idUnit, limit: $limit);
     }
     public function tambah(array $data) : bool
     {

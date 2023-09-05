@@ -16,7 +16,7 @@ class KelahiranServiceImplement implements KelahiranService
         return $this->kelahiranRepo->getBySektor($id_sektor);
     }
 
-    public function getByUnit(int $idUnit) : Collection
+    public function getByUnit(int $idUnit, ?int $limit = null) : Collection
     {
         return $this->kelahiranRepo->getByUnit($idUnit);
     }

@@ -20,14 +20,34 @@ class UnitRepoImplement implements UnitRepository
         return $this->unit->where('id_sektor', $id_sektor)->get();
     }
 
+    public function getById(int $id) : Unit{
+        return $this->unit->with('sektor')->findOrFail($id);
+    }
+
     public function tambah(array $data):Unit|null
     {
         return $this->unit->create($data);
     }
-
+    public function ubah(array $data, int $idUnit): bool
+    {
+        return $this->unit->where('id', $idUnit)->update($data);
+    }
+    public function ubahUnitPengurus(array $data, $idUser): bool
+    {
+        return $this->pengurusUnit->where('id_user', $idUser)->update($data);
+    }
     public function tambahPengurus(array $data) : PengurusUnit|null
     {
         return $this->pengurusUnit->create($data);
+    }
+
+    public function hapusPengurus(int $idUser) : bool
+    {
+        return $this->pengurusUnit->where('id_user', $idUser)->delete() > 0;
+    }
+    public function hapus(int $idUnit) : bool
+    {
+        return $this->unit->where('id', $idUnit)->delete() > 0;
     }
 
 }

@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Collection;
 interface UserService
 {
     public function tambah(array $data):bool;
+    public function ubah(array $data, int $id):bool;
 
     public function get() : Collection;
 

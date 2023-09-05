@@ -21,6 +21,7 @@ class AuthController extends Controller
 
     public function masuk()
     {
+        // dd(file_get_contents(storage_path('oauth-private.key')));
         return view('auth.masuk');
     }
 
@@ -34,7 +35,7 @@ class AuthController extends Controller
         try {
             if(\Auth::guard('admin')->attempt($credentials))
             {
-                return redirect()->intended('/');
+                return redirect()->route('home');
             }
             return redirect()->back()->with(AlertFormatter::danger("Gagal Masuk. Username atau password tidak sesuai."));
         } catch (\Exception $e) {

@@ -4,6 +4,7 @@
 
 <head>
 	<!-- Required meta tags -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--favicon-->
@@ -27,5 +28,5 @@
 	<link rel="stylesheet" href="assets/css/semi-dark.css" />
 	<link rel="stylesheet" href="assets/css/header-colors.css" />
     @yield('style')
-	<title>Amdash - Bootstrap 5 Admin Template</title>
+	<title>Admin - Pelayanan Syukur</title>
 </head>

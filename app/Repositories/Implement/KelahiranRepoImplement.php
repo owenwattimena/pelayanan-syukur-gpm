@@ -19,7 +19,7 @@ class KelahiranRepoImplement implements KelahiranRepository
         }])->get();
     }
 
-    public function getByUnit(int $idUnit) : Collection
+    public function getByUnit(int $idUnit, ?int $limit = null) : Collection
     {
         return $this->kelahiranModel->where('id_unit', $idUnit)->get();
     }
