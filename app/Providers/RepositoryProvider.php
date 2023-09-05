@@ -4,11 +4,13 @@ namespace App\Providers;
 
 use App\Repositories\AdminRepository;
 use App\Repositories\Implement\AdminRepoImplement;
+use App\Repositories\Implement\JemaatRepoImplement;
 use App\Repositories\Implement\KelahiranRepoImplement;
 use App\Repositories\Implement\PernikahanRepoImplement;
 use App\Repositories\Implement\SektorRepoImplement;
 use App\Repositories\Implement\UnitRepoImplement;
 use App\Repositories\Implement\UserRepoImplement;
+use App\Repositories\JemaatRepository;
 use App\Repositories\KelahiranRepository;
 use App\Repositories\PernikahanRepository;
 use App\Repositories\SektorRepository;
@@ -43,6 +45,9 @@ class RepositoryProvider extends ServiceProvider
         });
         $this->app->bind(UserRepository::class, function(Application $app){
             return $app->make(UserRepoImplement::class);
+        });
+        $this->app->bind(JemaatRepository::class, function(Application $app){
+            return $app->make(JemaatRepoImplement::class);
         });
     }
 

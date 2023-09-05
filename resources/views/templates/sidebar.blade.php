@@ -53,6 +53,13 @@
 
         <li>
             <a href="{{ route("pelayanan-pernikahan") }}" >
+                <div class="parent-icon"><i class="bx bx-user"></i>
+                </div>
+                <div class="menu-title">Jemaat</div>
+            </a>
+        </li>
+        <li>
+            <a href="{{ route("pelayanan-pernikahan") }}" >
                 <div class="parent-icon"><i class="bx bx-heart-circle"></i>
                 </div>
                 <div class="menu-title">Pelayanan Pernikahan</div>

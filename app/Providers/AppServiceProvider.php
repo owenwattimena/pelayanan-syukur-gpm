@@ -4,12 +4,14 @@ namespace App\Providers;
 
 use App\Services\AdminService;
 use App\Services\Implement\AdminServiceImplement;
+use App\Services\Implement\JemaatServiceImplement;
 use App\Services\Implement\KelahiranServiceImplement;
 use App\Services\Implement\PernikahanServiceImplement;
 use App\Services\Implement\PushNotificationServiceImplement;
 use App\Services\Implement\SektorServiceImplement;
 use App\Services\Implement\UnitServiceImplement;
 use App\Services\Implement\UserServiceImplement;
+use App\Services\JemaatService;
 use App\Services\KelahiranService;
 use App\Services\PernikahanService;
 use App\Services\PushNotificationService;
@@ -48,6 +50,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->bind(PushNotificationService::class, function(Application $app){
             return $app->make(PushNotificationServiceImplement::class);
+        });
+        $this->app->bind(JemaatService::class, function(Application $app){
+            return $app->make(JemaatServiceImplement::class);
         });
     }
 
