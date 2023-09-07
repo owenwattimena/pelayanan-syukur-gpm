@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\JemaatController;
 use App\Http\Controllers\Admin\KelahiranController;
 use App\Http\Controllers\Admin\PengaturanController;
 use App\Http\Controllers\Admin\PengurusSektorController;
@@ -28,6 +29,12 @@ Route::middleware(['auth:admin'])->group(function () {
         return view('home.index');
     })->name('home');
 
+    Route::prefix('/jemaat')->group(function () {
+        Route::get('/', [JemaatController::class, 'index'])->name('jemaat');
+        // Route::post('/', [SektorController::class, 'prosesTambah'])->name('sektor.tambah');
+        // Route::put('/{id}', [SektorController::class, 'prosesUbah'])->name('sektor.ubah');
+        // Route::delete('/{id}', [SektorController::class, 'prosesHapus'])->name('sektor.hapus');
+    });
     Route::prefix('/sektor')->group(function () {
         Route::get('/', [SektorController::class, 'index'])->name('sektor');
         Route::post('/', [SektorController::class, 'prosesTambah'])->name('sektor.tambah');

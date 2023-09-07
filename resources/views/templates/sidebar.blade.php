@@ -52,7 +52,7 @@
         @if (auth()->guard('admin')->user()->role == 'admin_sektor')
 
         <li>
-            <a href="{{ route("pelayanan-pernikahan") }}" >
+            <a href="{{ route("jemaat") }}" >
                 <div class="parent-icon"><i class="bx bx-user"></i>
                 </div>
                 <div class="menu-title">Jemaat</div>
