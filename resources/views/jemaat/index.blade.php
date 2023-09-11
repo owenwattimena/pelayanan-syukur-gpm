@@ -16,7 +16,7 @@
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
-                <form action="{{ route('pelayanan-kelahiran.tambah') }}" method="POST">
+                <form action="{{ route('jemaat.tambah') }}" method="POST">
                     @csrf
                     <div class="modal-content">
                         <div class="modal-header">
@@ -26,33 +26,68 @@
                         <div class="modal-body">
                             <div class="col-md-12">
                                 <label for="inputNoKK" class="form-label">No KK</label>
-                                <input type="text" class="form-control" id="inputNoKK" name="no_kk" placeholder="Nomor KK">
+                                <input type="text" class="form-control" id="inputNoKK" name="no_kk" placeholder="Nomor KK" required>
                             </div>
                             <div class="col-md-12">
                                 <label for="inputNamaLengkap" class="form-label">Nama Lengkap</label>
-                                <input type="text" class="form-control" id="inputNamaLengkap" name="nama_lengkap" placeholder="Nama Lengkap">
+                                <input type="text" class="form-control" id="inputNamaLengkap" name="nama_lengkap" placeholder="Nama Lengkap" required>
                             </div>
                             <div class="col-md-12">
                                 <label for="selectStatusKeluarga" class="form-label">Status Keluarga</label>
-                                <select type="date" class="form-control" id="selectStatusKeluarga" name="id_unit" >
+                                <select type="date" class="form-control" id="selectStatusKeluarga" name="status_keluarga" required>
                                     @foreach (["Kepala keluarga", "Istri", "Suami", "Anak", "Cucu", "Keponakan", "Orang Tua", "Mertua", "Menantu", "Kakak", "Adik", "Ipar", "Om/Tente", "Sepupu", "Keluarga Lain", "Penghuni Kost", "Lainnya"] as $item)
                                     <option value="{{ $item }}">{{ $item }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-12">
-                                <label for="inputTanggal" class="form-label">Tanggal</label>
-                                <input type="date" class="form-control" id="inputTanggal" name="tanggal" placeholder="Tanggal">
+                                <label for="selectJenisKelamin" class="form-label">Jenis Kelamin</label>
+                                <select type="date" class="form-control" id="selectJenisKelamin" name="jenis_kelamin" required>
+                                    @foreach (["Laki-laki", "Perempuan"] as $item)
+                                    <option value="{{ $item }}">{{ $item }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-md-12">
-                                <label for="inputJam" class="form-label">Jam</label>
-                                <input type="time" class="form-control" id="inputJam" name="jam" placeholder="Jam">
+                                <label for="inputTempatLahir" class="form-label">Tempat Lahir</label>
+                                <input type="text" class="form-control" id="inputTempatLahir" name="tempat_lahir" placeholder="Tempat Lahir" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="inputTanggalLahir" class="form-label">Tanggal Lahir</label>
+                                <input type="date" class="form-control" id="inputTanggalLahir" name="tanggal_lahir" placeholder="Tanggal" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="selectStatusDomisili" class="form-label">Status Domisili</label>
+                                <select type="date" class="form-control" id="selectStatusDomisili" name="status_domisili" required>
+                                    @foreach (["Aggota tetap GPM", "Anggota tidak tetap GPM"] as $item)
+                                    <option value="{{ $item }}">{{ $item }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="selectStatusMenikah" class="form-label">Status Menikah</label>
+                                <select type="date" class="form-control" id="selectStatusMenikah" name="status_menikah" required>
+                                    @foreach (["Belum Menikah", "Menikah"] as $item)
+                                    <option value="{{ $item }}">{{ $item }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="inputTanggalMenikah" class="form-label">Tanggal Menikah</label>
+                                <input type="date" class="form-control" id="inputTanggalMenikah" name="tanggal_menikah" placeholder="Tanggal">
                             </div>
                             <div class="col-md-12">
                                 <label for="inputAlamat" class="form-label">Alamat</label>
-                                <input type="text" class="form-control" id="inputAlamat" name="alamat" placeholder="Alamat">
+                                <textarea type="text" class="form-control" id="inputAlamat" name="alamat" placeholder="Alamat" required></textarea>
                             </div>
-
+                            <div class="col-md-12">
+                                <label for="selectIdUnit" class="form-label">Unit</label>
+                                <select type="date" class="form-control" id="selectIdUnit" name="id_unit" required>
+                                    @foreach ($unit as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama_unit }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

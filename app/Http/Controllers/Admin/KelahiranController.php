@@ -8,6 +8,7 @@ use App\Services\KelahiranService;
 use App\Services\PushNotificationService;
 use App\Services\UnitService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KelahiranController extends Controller
 {
@@ -23,8 +24,8 @@ class KelahiranController extends Controller
     }
     public function index()
     {
-        $data['kelahiran'] = $this->kelahiranService->getBySektor(\Auth::guard('admin')->user()->sektor->first()->id);
-        $data['unit'] = $this->unitService->get(\Auth::guard('admin')->user()->sektor->first()->id);
+        $data['kelahiran'] = $this->kelahiranService->getBySektor(Auth::guard('admin')->user()->sektor->first()->id);
+        $data['unit'] = $this->unitService->get(Auth::guard('admin')->user()->sektor->first()->id);
         return view('pelayanan-kelahiran.index', $data);
     }
     public function tambah(Request $request)
