@@ -32,9 +32,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::prefix('/jemaat')->group(function () {
         Route::get('/', [JemaatController::class, 'index'])->name('jemaat');
         Route::post('/', [JemaatController::class, 'prosesTambah'])->name('jemaat.tambah');
-        // Route::post('/', [SektorController::class, 'prosesTambah'])->name('sektor.tambah');
-        // Route::put('/{id}', [SektorController::class, 'prosesUbah'])->name('sektor.ubah');
-        // Route::delete('/{id}', [SektorController::class, 'prosesHapus'])->name('sektor.hapus');
+        Route::put('/{id}', [JemaatController::class, 'prosesUbah'])->name('jemaat.ubah');
+        Route::delete('/{id}', [JemaatController::class, 'prosesHapus'])->name('jemaat.hapus');
     });
     Route::prefix('/sektor')->group(function () {
         Route::get('/', [SektorController::class, 'index'])->name('sektor');

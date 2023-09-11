@@ -20,7 +20,7 @@ class PernikahanController extends Controller
     }
     public function index()
     {
-        $data['pernikahan'] = $this->pernikahanService->getBySektor(\Auth::guard('admin')->user()->sektor->first()->id);
+        // $data['pernikahan'] = $this->pernikahanService->getBySektor(\Auth::guard('admin')->user()->sektor->first()->id);
         $data['unit'] = $this->unitService->get(\Auth::guard('admin')->user()->sektor->first()->id);
 
         return view("pelayanan-pernikahan.index", $data);

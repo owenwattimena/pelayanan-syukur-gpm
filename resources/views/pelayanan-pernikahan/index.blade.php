@@ -75,7 +75,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($pernikahan as $item)
+                    @foreach ([] as $item)
                     <tr>
                         <td>{{ $item->nama_pria }}</td>
                         <td>{{ $item->nama_wanita }}</td>
