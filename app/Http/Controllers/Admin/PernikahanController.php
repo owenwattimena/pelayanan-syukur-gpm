@@ -6,7 +6,10 @@ use App\Helpers\AlertFormatter;
 use App\Http\Controllers\Controller;
 use App\Services\PernikahanService;
 use App\Services\UnitService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PernikahanController extends Controller
 {
@@ -18,11 +21,26 @@ class PernikahanController extends Controller
         $this->pernikahanService = $pernikahanService;
         $this->unitService = $unitService;
     }
-    public function index()
+    public function index(Request $request)
     {
-        // $data['pernikahan'] = $this->pernikahanService->getBySektor(\Auth::guard('admin')->user()->sektor->first()->id);
-        $data['unit'] = $this->unitService->get(\Auth::guard('admin')->user()->sektor->first()->id);
+        $date = Carbon::now();
+        $data['month'] = $date->month;
+        if($request->query('month'))
+        {
+            $data['month'] = $request->query('month');
+        }
 
+        // $data['pernikahan'] = $this->pernikahanService->getBySektor(\Auth::guard('admin')->user()->sektor->first()->id);
+        $query = DB::table('jemaat as l')->select(['l.nama_lengkap as suami', 'p.nama_lengkap as istri', 'l.tanggal_menikah', 'l.id_unit', 'u.nama_unit', 'l.alamat'])
+            ->join('jemaat as p', 'l.no_kk', '=', 'p.no_kk')
+            ->where('l.status_keluarga', 'Kepala keluarga')
+            ->where('p.status_keluarga', 'Istri')
+            ->join('unit as u', 'l.id_unit', '=', 'u.id');
+
+        $query = $query->whereMonth('l.tanggal_menikah', $data['month']);
+        
+        $data['pernikahan'] = $query->get();
+        $data['unit'] = $this->unitService->get(Auth::guard('admin')->user()->sektor->first()->id);
         return view("pelayanan-pernikahan.index", $data);
     }
 

@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Services\KelahiranService;
 use App\Services\PushNotificationService;
 use App\Services\UnitService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class KelahiranController extends Controller
 {
@@ -22,10 +24,22 @@ class KelahiranController extends Controller
         $this->pushNotifService = $pushNotifService;
 
     }
-    public function index()
+    public function index(Request $request)
     {
-        $data['kelahiran'] = $this->kelahiranService->getBySektor(Auth::guard('admin')->user()->sektor->first()->id);
+        $date = Carbon::now();
+        $data['month'] = $date->month;
+        if($request->query('month'))
+        {
+            $data['month'] = $request->query('month');
+        }
+        // $data['kelahiran'] = $this->kelahiranService->getBySektor(Auth::guard('admin')->user()->sektor->first()->id);
         $data['unit'] = $this->unitService->get(Auth::guard('admin')->user()->sektor->first()->id);
+        $query = DB::table('jemaat')->select(['nama_lengkap', 'tanggal_lahir', 'id_unit', 'u.nama_unit', 'alamat'])
+            ->join('unit as u', 'id_unit', '=', 'u.id');
+
+        $query = $query->whereMonth('tanggal_lahir', $data['month']);
+        
+        $data['kelahiran'] = $query->orderBy('tanggal_lahir')->get();
         return view('pelayanan-kelahiran.index', $data);
     }
     public function tambah(Request $request)
