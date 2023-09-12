@@ -22,7 +22,6 @@ class KelahiranController extends Controller
         $this->kelahiranService = $kelahiranService;
         $this->unitService = $unitService;
         $this->pushNotifService = $pushNotifService;
-
     }
     public function index(Request $request)
     {
@@ -38,7 +37,7 @@ class KelahiranController extends Controller
             ->join('unit as u', 'id_unit', '=', 'u.id');
 
         $query = $query->whereMonth('tanggal_lahir', $data['month']);
-        
+
         $data['kelahiran'] = $query->orderBy('tanggal_lahir')->get();
         return view('pelayanan-kelahiran.index', $data);
     }

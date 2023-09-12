@@ -1,25 +1,39 @@
 <?php
 namespace App\Services\Implement;
 
+use App\Helpers\FirebaseCloudMessaging;
 use App\Models\Admin;
 use App\Models\User;
+use App\Repositories\KelahiranRepository;
+use App\Repositories\PernikahanRepository;
 use App\Services\PushNotificationService;
 
 class PushNotificationServiceImplement implements PushNotificationService
 {
+    private string $url = 'https://fcm.googleapis.com/fcm/send';
+    private string $serverKey = "AAAA1iml1XM:APA91bFboFI-dE1cw_KWfP4LIESyL7dJh2IDzar7IOlMS9zJWeokMsZcpcwYehyarQsI8Y26MCFs0vaUlfP1qP4NPJtwOkEI0nSQ1Gha5LnxHPklpmPfMP5zv9ZLhhzAMVXFwg5s2v4V";
+
+
+    private PernikahanRepository $pernikahanRepo;
+    private KelahiranRepository $kelahiranRepo;
+
+    public function __construct(PernikahanRepository $pernikahanRepo, KelahiranRepository $kelahiranRepo)
+    {
+        $this->pernikahanRepo = $pernikahanRepo;
+        $this->kelahiranRepo = $kelahiranRepo;
+    }
+
     public function updateFcmToken(array $data): bool
     {
         return \Auth::user()->update($data);
     }
     public function pushNotification(array $notif, array $data, int $idUnit): bool
     {
-        $url = 'https://fcm.googleapis.com/fcm/send';
         // $fcmToken = User::with(['unit'])->whereNotNull('fcm_token')->pluck('fcm_token')->all();
-        $fcmToken = User::whereHas('unit', function($query) use ($idUnit){
+        $fcmToken = User::whereHas('unit', function ($query) use ($idUnit) {
             return $query->where('unit.id', $idUnit);
         })->whereNotNull('fcm_token')->pluck('fcm_token')->all();
 
-        $serverKey = "AAAA1iml1XM:APA91bFboFI-dE1cw_KWfP4LIESyL7dJh2IDzar7IOlMS9zJWeokMsZcpcwYehyarQsI8Y26MCFs0vaUlfP1qP4NPJtwOkEI0nSQ1Gha5LnxHPklpmPfMP5zv9ZLhhzAMVXFwg5s2v4V";
 
         $notifData = [
             "registration_ids" => $fcmToken,
@@ -29,13 +43,13 @@ class PushNotificationServiceImplement implements PushNotificationService
         $encodedData = json_encode($notifData);
 
         $headers = [
-            'Authorization:key=' . $serverKey,
+            'Authorization:key=' . $this->serverKey,
             'Content-Type: application/json',
         ];
 
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_URL, $this->url);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -55,5 +69,30 @@ class PushNotificationServiceImplement implements PushNotificationService
         // FCM response
         dd($result);
         return false;
+    }
+
+    public function pushNotificationPernikahan(?int $day = 0)
+    {
+        $data = $this->pernikahanRepo->getTheDay($day);
+        if ($data->count() > 0) {
+
+            $notif["title"] = "Ibadah Pelayanan Ulang Tahun Kelahiran";
+            foreach ($data as $key => $value) {
+                $idUnit = $value->id_unit;
+                $fcmTokens = User::whereHas('unit', function ($query) use ($idUnit) {
+                    return $query->where('unit.id', $idUnit);
+                })->whereNotNull('fcm_token')->pluck('fcm_token')->all();
+
+                $notif["body"] = "Ibadah Pelayanan Ulang Tahun Pernikahan pasangan $value->suami & $value->istri pada $value->tanggal_menikah, $value->nama_unit di $value->alamat akan dimulai $day hari lagi.";
+
+                FirebaseCloudMessaging::send($fcmTokens, $notif);
+            }
+        }
+
+
+    }
+    public function pushNotificationKelahiran(?int $day = 0)
+    {
+
     }
 }
