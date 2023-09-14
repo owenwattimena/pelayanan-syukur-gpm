@@ -2,6 +2,7 @@
 namespace App\Repositories\Implement;
 use App\Models\Jemaat;
 use App\Repositories\JemaatRepository;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -33,7 +34,18 @@ class JemaatRepoImplement implements JemaatRepository
     }
     public function getPernikahan($awal, $akhir, ?int $idUnit): \Illuminate\Support\Collection
     {
-        $query = DB::table('jemaat as l')->select(['l.nama_lengkap as suami', 'p.nama_lengkap as istri', 'l.tanggal_menikah', 'l.id_unit', 'u.nama_unit', 'l.alamat'])
+        $query = DB::table('jemaat as l')->select(
+                [
+                    'l.nama_lengkap as suami',
+                    'p.nama_lengkap as istri',
+                    'l.tanggal_menikah',
+                    // DB::raw('YEAR(' . Carbon::now() . ') - YEAR(l.tanggal_menikah) - (DATE_FORMAT(' . Carbon::now() . ', "%m%d") < DATE_FORMAT(l.tanggal_menikah, "%m%d")) AS usia'),
+                    // DB::raw('YEAR(CURDATE()) - YEAR(l.tanggal_menikah) - (DATE_FORMAT(CURDATE(), "%m%d") < DATE_FORMAT(l.tanggal_menikah, "%m%d")) AS usia'),
+                    DB::raw('YEAR(CURDATE()) - YEAR(l.tanggal_menikah)  AS usia'),
+                    'l.id_unit',
+                    'u.nama_unit',
+                    'l.alamat']
+            )
             ->join('jemaat as p', 'l.no_kk', '=', 'p.no_kk')
             ->where('l.status_keluarga', 'Kepala keluarga')
             ->where('p.status_keluarga', 'Istri')
@@ -44,7 +56,7 @@ class JemaatRepoImplement implements JemaatRepository
         }
 
         $query = $query->whereBetween(DB::raw('DATE_ADD(l.tanggal_menikah, INTERVAL YEAR(CURDATE()) - YEAR(l.tanggal_menikah) YEAR)'), [now(), now()->addDays(50)]);
-        $query = $query->orderBy('l.tanggal_menikah');
+        $query = $query->orderByRaw('MONTH(l.tanggal_menikah) ASC, DAY(l.tanggal_menikah) ASC');
         return $query->get();
     }
 
@@ -52,14 +64,20 @@ class JemaatRepoImplement implements JemaatRepository
     {
         $query = DB::table('jemaat')
             ->select(
-                ['nama_lengkap', 'tanggal_lahir', 'id_unit', 'u.nama_unit', 'alamat']
+                ['nama_lengkap', 'tanggal_lahir',
+                DB::raw('YEAR(CURDATE()) - YEAR(tanggal_lahir)  AS usia'),
+                'id_unit', 'u.nama_unit', 'alamat']
             )->join('unit as u', 'id_unit', '=', 'u.id');
 
-        $query = $query->whereBetween('l.tanggal_lahir', [$awal, $akhir]);
+        // $query = $query->whereBetween('l.tanggal_lahir', [$awal, $akhir]);
+
+        $query = $query->whereBetween(DB::raw('DATE_ADD(tanggal_lahir, INTERVAL YEAR(CURDATE()) - YEAR(tanggal_lahir) YEAR)'), [now(), now()->addDays(50)]);
+
+
         if ($idUnit != null) {
             $query = $query->where('id_unit', '=', $idUnit);
         }
-        $query = $query->orderBy('tanggal_lahir');
+        $query = $query->orderByRaw('MONTH(tanggal_lahir) ASC, DAY(tanggal_lahir) ASC');
         return $query->get();
     }
 }
