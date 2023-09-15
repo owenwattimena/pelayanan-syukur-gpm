@@ -29,6 +29,7 @@
                         <th>Nama Pria</th>
                         <th>Nama Wanita</th>
                         <th>Tanggal Pernikahan</th>
+                        <th>Ulang Tahun Ke-</th>
                         <th>Unit</th>
                         <th>Alamat</th>
                         {{-- <th>Aksi</th> --}}
@@ -40,6 +41,7 @@
                         <td>{{ $item->suami }}</td>
                         <td>{{ $item->istri }}</td>
                         <td>{{ $item->tanggal_menikah }}</td>
+                        <td>{{ $item->usia }}</td>
                         <td>{{ $item->nama_unit }}</td>
                         <td>{{ $item->alamat }}</td>
                         {{-- <td>

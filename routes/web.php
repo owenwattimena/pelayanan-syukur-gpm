@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\JemaatController;
 use App\Http\Controllers\Admin\KelahiranController;
 use App\Http\Controllers\Admin\PengaturanController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Admin\PushNotificationController;
 use App\Http\Controllers\Admin\SektorController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\VerifikasiController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,9 +27,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:admin'])->group(function () {
 
 
-    Route::get('/', function () {
-        return view('home.index');
-    })->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::prefix('/jemaat')->group(function () {
         Route::get('/', [JemaatController::class, 'index'])->name('jemaat');
@@ -79,7 +79,7 @@ Route::middleware(['auth:admin'])->group(function () {
     });
 
     Route::get('/keluar', function () {
-        \Auth::logout();
+        Auth::logout();
         return redirect()->route('masuk');
     })->name('keluar');
 

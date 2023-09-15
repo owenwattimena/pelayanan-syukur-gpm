@@ -9,6 +9,7 @@ class UnitServiceImplement implements UnitService
 {
     public UnitRepository $unitRepo;
 
+
     public function __construct(UnitRepository $unitRepo)
     {
         $this->unitRepo = $unitRepo;
@@ -32,5 +33,14 @@ class UnitServiceImplement implements UnitService
     public function hapus(int $idUnit) : bool
     {
         return $this->unitRepo->hapus($idUnit);
+    }
+    public function getTotal(?int $idSektor = null):int
+    {
+        return $this->unitRepo->getTotal(idSektor: $idSektor);
+    }
+
+    public function getTotalPengurus(?int $idSektor = null): int
+    {
+        return $this->unitRepo->getTotalPengurus(idSektor: $idSektor);
     }
 }

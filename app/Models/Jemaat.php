@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Jemaat extends Model
 {
@@ -23,4 +24,14 @@ class Jemaat extends Model
         'alamat',
         'id_unit',
     ];
+
+    /**
+     * Get the unit associated with the pernikahan
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function unit(): HasOne
+    {
+        return $this->hasOne(Unit::class, 'id', 'id_unit');
+    }
 }

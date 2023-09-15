@@ -10,4 +10,6 @@ interface UnitService
     public function tambah(array $data): Unit|null;
     public function ubah(array $data, int $idUnit): bool;
     public function hapus(int $idUnit) : bool;
+    public function getTotal(?int $idSektor = null):int;
+    public function getTotalPengurus(?int $idSektor = null):int;
 }

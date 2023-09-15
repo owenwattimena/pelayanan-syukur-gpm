@@ -55,7 +55,7 @@
             <a href="{{ route("jemaat") }}" >
                 <div class="parent-icon"><i class="bx bx-user"></i>
                 </div>
-                <div class="menu-title">Jemaat</div>
+                <div class="menu-title">Jemaat Sektor</div>
             </a>
         </li>
         <li>

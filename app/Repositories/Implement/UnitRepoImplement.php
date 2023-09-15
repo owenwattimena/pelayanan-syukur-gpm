@@ -49,5 +49,18 @@ class UnitRepoImplement implements UnitRepository
     {
         return $this->unit->where('id', $idUnit)->delete() > 0;
     }
+    public function getTotal(?int $idSektor = null):int
+    {
+        return $this->unit->count();
+    }
+    public function getTotalPengurus(?int $idSektor = null): int
+    {
+        if($idSektor != null)
+        {
+            $unit = $this->unit->where('id_sektor', $idSektor)->first();
+            return $unit->pengurus->count();
+        }
+        return $this->pengurusUnit->count();
+    }
 
 }

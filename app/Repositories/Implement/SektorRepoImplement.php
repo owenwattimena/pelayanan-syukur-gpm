@@ -62,4 +62,14 @@ class SektorRepoImplement implements SektorRepository
     {
         return $this->modelPengurusSektor->destroy($id) > 0;
     }
+
+    public function getTotal() : int
+    {
+        return $this->modelSektor->count();
+    }
+
+    public function getTotalPengurus(): int
+    {
+        return $this->modelPengurusSektor->count();
+    }
 }

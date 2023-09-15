@@ -33,7 +33,7 @@ class KelahiranController extends Controller
         }
         // $data['kelahiran'] = $this->kelahiranService->getBySektor(Auth::guard('admin')->user()->sektor->first()->id);
         $data['unit'] = $this->unitService->get(Auth::guard('admin')->user()->sektor->first()->id);
-        $query = DB::table('jemaat')->select(['nama_lengkap', 'tanggal_lahir', 'id_unit', 'u.nama_unit', 'alamat'])
+        $query = DB::table('jemaat')->select(['nama_lengkap', 'tanggal_lahir',  DB::raw('YEAR(CURDATE()) - YEAR(tanggal_lahir)  AS usia'),'id_unit', 'u.nama_unit', 'alamat'])
             ->join('unit as u', 'id_unit', '=', 'u.id');
 
         $query = $query->whereMonth('tanggal_lahir', $data['month']);

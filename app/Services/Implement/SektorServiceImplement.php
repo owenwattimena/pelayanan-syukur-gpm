@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services\Implement;
+
 use App\Models\PengurusSektor;
 use App\Models\Sektor;
 use App\Repositories\AdminRepository;
@@ -26,7 +27,7 @@ class SektorServiceImplement implements SektorService
         return $this->sektorRepo->get();
     }
 
-    public function tambah(array $data) : Sektor|null
+    public function tambah(array $data): Sektor|null
     {
         return $this->sektorRepo->tambah($data);
     }
@@ -47,10 +48,10 @@ class SektorServiceImplement implements SektorService
         return $this->sektorRepo->tambahPengurus($data);
     }
 
-    public function ubahPengurus(array $data, int $idPengurus) : bool
+    public function ubahPengurus(array $data, int $idPengurus): bool
     {
         return DB::transaction(function () use ($data, $idPengurus) {
-            $pengurus = $this->sektorRepo->getPengurus(id:$idPengurus)->first();
+            $pengurus = $this->sektorRepo->getPengurus(id: $idPengurus)->first();
 
             $this->sektorRepo->ubahPengurus([
                 'id_admin' => $pengurus->id_admin,
@@ -62,8 +63,7 @@ class SektorServiceImplement implements SektorService
                 'telepon' => $data['telepon'],
                 'username' => $data['username'],
             ];
-            if(isset($data['password']))
-            {
+            if (isset($data['password'])) {
                 $user['password'] = $data['password'];
             }
             $this->adminRepo->ubah($user, $pengurus->id_admin);
@@ -72,14 +72,22 @@ class SektorServiceImplement implements SektorService
         });
     }
 
-    public function hapusPengurus(int $id) : bool
+    public function hapusPengurus(int $id): bool
     {
         return DB::transaction(function () use ($id) {
-            $pengurus = $this->sektorRepo->getPengurus(id:$id)->first();
+            $pengurus = $this->sektorRepo->getPengurus(id: $id)->first();
             $this->sektorRepo->hapusPengurus($id);
             $this->adminRepo->hapus($pengurus->id_admin);
             return true;
-    });
+        });
+    }
 
+    public function getTotal() : int
+    {
+        return $this->sektorRepo->getTotal();
+    }
+    public function getTotalPengurus(): int
+    {
+        return $this->sektorRepo->getTotal();
     }
 }

@@ -13,5 +13,7 @@ interface SektorService{
     public function tambahPengurus(array $data): PengurusSektor|null;
     public function ubahPengurus(array $data, int $idPengurus) : bool;
     public function hapusPengurus(int $id) : bool;
+    public function getTotal() : int;
+    public function getTotalPengurus() : int;
 
 }

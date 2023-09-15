@@ -28,6 +28,7 @@
                     <tr>
                         <th>Nama</th>
                         <th>Tanggal Kelahiran</th>
+                        <th>Ulang Tahun Ke-</th>
                         <th>Unit</th>
                         <th>Alamat</th>
                         <th>Aksi</th>
@@ -38,6 +39,7 @@
                         <tr>
                             <td>{{ $item->nama_lengkap }}</td>
                             <td>{{ $item->tanggal_lahir }}</td>
+                            <td>{{ $item->usia }}</td>
                             <td>{{ $item->nama_unit }}</td>
                             <td>{{ $item->alamat }}</td>
                             <td>

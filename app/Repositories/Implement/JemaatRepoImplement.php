@@ -3,7 +3,7 @@ namespace App\Repositories\Implement;
 use App\Models\Jemaat;
 use App\Repositories\JemaatRepository;
 use Carbon\Carbon;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Collection;
 
 class JemaatRepoImplement implements JemaatRepository

@@ -111,6 +111,7 @@
                         <th>Status Menikah</th>
                         <th>Tanggal Menikah</th>
                         <th>Alamat</th>
+                        <th>Unit</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -130,8 +131,9 @@
                         <td>{{ $row->status_menikah ? "Menikah" : "Belum Menikah" }}</td>
                         <td>{{ $row->tanggal_menikah }}</td>
                         <td>{{ $row->alamat }}</td>
+                        <td>{{ $row->unit->nama_unit }}</td>
                         <td>
-                            <button class="btn btn-sm btn-warning rounded" data-bs-toggle="modal" data-bs-target="#ubahDataModal"><i class="bx bx-edit"></i></button>
+                            <button class="btn btn-sm btn-warning rounded" data-bs-toggle="modal" data-bs-target="#ubahDataModal-{{$row->id}}"><i class="bx bx-edit"></i></button>
 
                             <form action="{{ route('jemaat.hapus', $row->id) }}" method="post" class="d-inline">
                                 @csrf
@@ -141,7 +143,7 @@
                         </td>
                     </tr>
                     <!-- Modal -->
-                    <div class="modal fade" id="ubahDataModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="ubahDataModal-{{$row->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <form action="{{ route('jemaat.ubah', $row->id) }}" method="POST">
                                 @csrf

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Unit extends Model
@@ -25,5 +26,10 @@ class Unit extends Model
     public function sektor(): HasOne
     {
         return $this->hasOne(Sektor::class, 'id', 'id_sektor');
+    }
+
+    public function pengurus() : HasMany
+    {
+        return $this->hasMany(PengurusUnit::class, 'id', 'id_unit');
     }
 }
