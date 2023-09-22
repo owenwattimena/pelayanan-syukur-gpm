@@ -88,6 +88,6 @@ class SektorServiceImplement implements SektorService
     }
     public function getTotalPengurus(): int
     {
-        return $this->sektorRepo->getTotal();
+        return $this->sektorRepo->getTotalPengurus();
     }
 }

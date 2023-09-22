@@ -30,6 +30,8 @@ class PengaturanController extends Controller
                 $pengaturan = new Pengaturan;
             }
             $pengaturan->nama_jemaat = $data['nama_jemaat'];
+            $pengaturan->waktu_notifikasi = $request->waktu_notifikasi;
+            $pengaturan->durasi_notifikasi = $request->durasi_notifikasi;
             if ($pengaturan->save()) {
                 return redirect()->back()->with(AlertFormatter::success("Pengaturan berhasil disimpan"));
             }

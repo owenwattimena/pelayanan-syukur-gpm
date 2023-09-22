@@ -3,7 +3,10 @@ namespace App\Repositories\Implement;
 use App\Models\Kelahiran;
 use App\Models\Pernikahan;
 use App\Repositories\KelahiranRepository;
+use Carbon\Carbon;
+use DB;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as Collection1;
 
 class KelahiranRepoImplement implements KelahiranRepository
 {
@@ -26,5 +29,18 @@ class KelahiranRepoImplement implements KelahiranRepository
     public function tambah(array $data) : Kelahiran | null
     {
         return $this->kelahiranModel->create($data);
+    }
+
+    public function getTheDay(?int $day = 0) :  Collection1
+    {
+        $date = Carbon::now();
+        $theDay = $date->addDays($day);
+        $query = DB::table('jemaat')->select(['nama_lengkap', 'tanggal_lahir', DB::raw("DATE_PART('YEAR', current_date) - DATE_PART('YEAR',tanggal_lahir)  AS usia"),'id_unit', 'u.nama_unit', 'alamat'])
+            ->join('unit as u', 'id_unit', '=', 'u.id');
+
+        $query = $query->whereMonth('tanggal_lahir', $theDay->month);
+        $query = $query->whereDay('tanggal_lahir', $theDay->day);
+
+        return $query->get();
     }
 }

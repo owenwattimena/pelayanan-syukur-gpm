@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\KelahiranController;
 use App\Http\Controllers\Admin\PengaturanController;
 use App\Http\Controllers\Admin\PengurusSektorController;
 use App\Http\Controllers\Admin\PernikahanController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PushNotificationController;
 use App\Http\Controllers\Admin\SektorController;
 use App\Http\Controllers\Admin\UnitController;
@@ -77,6 +78,9 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::prefix('/push-notification')->group(function () {
         Route::put('/fcm-token', [PushNotificationController::class, 'updateFcmToken'])->name('updateFcmToken');
     });
+
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile');
+    Route::post('profile/ubah-password', [ProfileController::class, 'ubahPassword'])->name('profile.password');
 
     Route::get('/keluar', function () {
         Auth::logout();

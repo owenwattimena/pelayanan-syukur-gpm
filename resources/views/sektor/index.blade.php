@@ -4,8 +4,8 @@
 @endsection
 
 
-@section('title', 'Unit')
-@section('subtitle', 'Daftar Unit')
+@section('title', 'Sektor')
+@section('subtitle', 'Daftar Sektor')
 
 @section('content')
 <div class="card">

@@ -44,7 +44,7 @@ class PernikahanRepoImplement implements PernikahanRepository
     {
         $date = Carbon::now();
         $theDay = $date->addDays($day);
-        $query = DB::table('jemaat as l')->select(['l.nama_lengkap as suami', 'p.nama_lengkap as istri', 'l.tanggal_menikah', 'l.id_unit', 'u.nama_unit', 'l.alamat'])
+        $query = DB::table('jemaat as l')->select(['l.nama_lengkap as suami', 'p.nama_lengkap as istri', 'l.tanggal_menikah', DB::raw("DATE_PART('YEAR', current_date) - DATE_PART('YEAR',l.tanggal_menikah)  AS usia"),'l.id_unit', 'u.nama_unit', 'l.alamat'])
             ->join('jemaat as p', 'l.no_kk', '=', 'p.no_kk')
             ->where('l.status_keluarga', 'Kepala keluarga')
             ->where('p.status_keluarga', 'Istri')

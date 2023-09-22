@@ -6,12 +6,14 @@ use App\Repositories\AdminRepository;
 use App\Repositories\Implement\AdminRepoImplement;
 use App\Repositories\Implement\JemaatRepoImplement;
 use App\Repositories\Implement\KelahiranRepoImplement;
+use App\Repositories\Implement\NotifikasiRepoImplement;
 use App\Repositories\Implement\PernikahanRepoImplement;
 use App\Repositories\Implement\SektorRepoImplement;
 use App\Repositories\Implement\UnitRepoImplement;
 use App\Repositories\Implement\UserRepoImplement;
 use App\Repositories\JemaatRepository;
 use App\Repositories\KelahiranRepository;
+use App\Repositories\NotifikasiRepository;
 use App\Repositories\PernikahanRepository;
 use App\Repositories\SektorRepository;
 use App\Repositories\UnitRepository;
@@ -48,6 +50,9 @@ class RepositoryProvider extends ServiceProvider
         });
         $this->app->bind(JemaatRepository::class, function(Application $app){
             return $app->make(JemaatRepoImplement::class);
+        });
+        $this->app->bind(NotifikasiRepository::class, function(Application $app){
+            return $app->make(NotifikasiRepoImplement::class);
         });
     }
 

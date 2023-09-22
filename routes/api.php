@@ -42,6 +42,7 @@ Route::prefix('v1')->group(function () {
 
         Route::put('/fcm-token', [PushNotificationController::class, 'updateFcmToken'])->name('updateFcmToken');
         Route::post('/notifikasi', [PushNotificationController::class, 'saveNotifikasi']);
+        Route::get('/notifikasi/{idUnit}', [PushNotificationController::class, 'getNotifikasi']);
 
         Route::post('/logout', [UserController::class, 'logout']);
         Route::put('/user', [UserController::class, 'update']);

@@ -16,6 +16,6 @@ interface UnitRepository
     public function hapusPengurus(int $idUser) : bool;
     public function hapus(int $idUnit) : bool;
     public function getTotal(?int $idSektor = null):int;
-    public function getTotalPengurus(?int $idSektor = null):int;
+    public function getTotalPengurus(?array $idsUnit = null):int;
 
 }

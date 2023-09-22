@@ -31,12 +31,12 @@ class JemaatServiceImplement implements JemaatService
     {
         return $this->jemaatRepo->delete($ids);
     }
-    public function getPernikahan($awal, $akhir, ?int $idUnit): \Illuminate\Support\Collection
+    public function getPernikahan($awal, $akhir, ?int $idUnit, ?int $limit = null): \Illuminate\Support\Collection
     {
-        return $this->jemaatRepo->getPernikahan($awal, $akhir, idUnit: $idUnit);
+        return $this->jemaatRepo->getPernikahan($awal, $akhir, idUnit: $idUnit, limit: $limit);
     }
-    public function getKelahiran($awal, $akhir, ?int $idUnit): \Illuminate\Support\Collection
+    public function getKelahiran($awal, $akhir, ?int $idUnit, ?int $limit = null): \Illuminate\Support\Collection
     {
-        return $this->jemaatRepo->getKelahiran($awal, $akhir, idUnit: $idUnit);
+        return $this->jemaatRepo->getKelahiran($awal, $akhir, idUnit: $idUnit, limit: $limit);
     }
 }

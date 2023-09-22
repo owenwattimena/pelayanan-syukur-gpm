@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Models\Pengaturan;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,7 +17,16 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('notification:send')->everyMinute();
+        $pengaturan = Pengaturan::all()->first();
+
+        if($pengaturan->waktu_notifikasi == '*')
+        {
+            $schedule->command('notification:send')->everyMinute()->timezone('Asia/Jayapura');
+        }else{
+            $schedule->command('notification:send')->dailyAt($pengaturan->waktu_notifikasi)->timezone('Asia/Jayapura');
+        }
+
+        // $schedule->command('notification:send')->everyMinute();
     }
 
     /**

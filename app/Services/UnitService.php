@@ -11,5 +11,5 @@ interface UnitService
     public function ubah(array $data, int $idUnit): bool;
     public function hapus(int $idUnit) : bool;
     public function getTotal(?int $idSektor = null):int;
-    public function getTotalPengurus(?int $idSektor = null):int;
+    public function getTotalPengurus(?array $idsUnit = null):int;
 }

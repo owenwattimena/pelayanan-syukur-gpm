@@ -5,6 +5,7 @@ use App\Helpers\FirebaseCloudMessaging;
 use App\Models\Admin;
 use App\Models\User;
 use App\Repositories\KelahiranRepository;
+use App\Repositories\NotifikasiRepository;
 use App\Repositories\PernikahanRepository;
 use App\Services\PushNotificationService;
 
@@ -16,11 +17,13 @@ class PushNotificationServiceImplement implements PushNotificationService
 
     private PernikahanRepository $pernikahanRepo;
     private KelahiranRepository $kelahiranRepo;
+    private NotifikasiRepository $notifRepo;
 
-    public function __construct(PernikahanRepository $pernikahanRepo, KelahiranRepository $kelahiranRepo)
+    public function __construct(PernikahanRepository $pernikahanRepo, KelahiranRepository $kelahiranRepo, NotifikasiRepository $notifRepo)
     {
         $this->pernikahanRepo = $pernikahanRepo;
         $this->kelahiranRepo = $kelahiranRepo;
+        $this->notifRepo = $notifRepo;
     }
 
     public function updateFcmToken(array $data): bool
@@ -75,17 +78,21 @@ class PushNotificationServiceImplement implements PushNotificationService
     {
         $data = $this->pernikahanRepo->getTheDay($day);
         if ($data->count() > 0) {
-
-            $notif["title"] = "Ibadah Pelayanan Ulang Tahun Kelahiran";
+            $judul = "Ibadah Pelayanan Ulang Tahun Pernikahan";
+            $notif["title"] = $judul;
+            $dataNotif['judul'] = $judul;
             foreach ($data as $key => $value) {
                 $idUnit = $value->id_unit;
                 $fcmTokens = User::whereHas('unit', function ($query) use ($idUnit) {
                     return $query->where('unit.id', $idUnit);
                 })->whereNotNull('fcm_token')->pluck('fcm_token')->all();
-
-                $notif["body"] = "Ibadah Pelayanan Ulang Tahun Pernikahan pasangan $value->suami & $value->istri pada $value->tanggal_menikah, $value->nama_unit di $value->alamat akan dimulai $day hari lagi.";
+                $isi = "Ibadah Pelayanan Ulang Tahun Pernikahan ke-$value->usia Thn, pasangan $value->suami & $value->istri pada $value->tanggal_menikah, $value->nama_unit di $value->alamat akan dimulai $day hari lagi.";
+                $notif["body"] = $isi;
+                $dataNotif['isi'] = $isi;
+                $dataNotif['id_unit'] = $idUnit;
 
                 FirebaseCloudMessaging::send($fcmTokens, $notif);
+                $this->notifRepo->save($dataNotif);
             }
         }
 
@@ -93,6 +100,25 @@ class PushNotificationServiceImplement implements PushNotificationService
     }
     public function pushNotificationKelahiran(?int $day = 0)
     {
+        $data = $this->kelahiranRepo->getTheDay($day);
+        if ($data->count() > 0) {
+            $judul = "Ibadah Pelayanan Ulang Tahun Kelahiran";
+            $notif["title"] = $judul;
+            $notifData['judul'] = $judul;
+            foreach ($data as $key => $value) {
+                $idUnit = $value->id_unit;
+                $fcmTokens = User::whereHas('unit', function ($query) use ($idUnit) {
+                    return $query->where('unit.id', $idUnit);
+                })->whereNotNull('fcm_token')->pluck('fcm_token')->all();
+                $isi = "Ibadah Pelayanan Ulang Tahun Kelahiran ke-$value->usia Thn, $value->nama_lengkap pada $value->tanggal_lahir, $value->nama_unit di $value->alamat akan dimulai $day hari lagi.";
+                $notif["body"] = $isi;
+                $notifData['isi'] = $isi;
+                $notifData['id_unit'] = $idUnit;
 
+                FirebaseCloudMessaging::send($fcmTokens, $notif);
+                $this->notifRepo->save($notifData);
+
+            }
+        }
     }
 }

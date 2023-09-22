@@ -27,9 +27,10 @@ class HomeController extends Controller
             $data['totalPengurusSektor'] = $this->sektorService->getTotalPengurus();
             $data['totalPengurusUnit'] = $this->unitService->getTotalPengurus();
         }else{
+            $idsUnit = $user->sektor->first()->unit->pluck('id')->toArray();
             $idSektor = $user->sektor->first()->pivot->id_sektor;
             $data['totalUnit'] = $this->unitService->getTotal(idSektor: $idSektor);
-            $data['totalPengurusUnit'] = $this->unitService->getTotalPengurus(idSektor: $idSektor);
+            $data['totalPengurusUnit'] = $this->unitService->getTotalPengurus(idsUnit: $idsUnit);
         }
 
         return view('home.index', $data);

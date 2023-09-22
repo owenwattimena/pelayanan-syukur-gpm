@@ -70,6 +70,6 @@ class SektorRepoImplement implements SektorRepository
 
     public function getTotalPengurus(): int
     {
-        return $this->modelPengurusSektor->count();
+        return $this->modelPengurusSektor->get()->count();
     }
 }

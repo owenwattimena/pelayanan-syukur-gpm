@@ -33,6 +33,12 @@ class PushNotificationController extends Controller
         }
     }
 
+    public function getNotifikasi(Request $request, $idUnit)
+    {
+        $data = Notifikasi::where('id_unit', $idUnit)->orderBy('created_at', 'desc')->get();
+        return JsonFormatter::success($data, message: "Data Notifikasi Unit");
+    }
+
     public function saveNotifikasi(Request $request)
     {
         $data = \Validator::make($request->all(), [

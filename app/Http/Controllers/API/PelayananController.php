@@ -31,7 +31,7 @@ class PelayananController extends Controller
         $dateAkhir = Carbon::now()->addDays(40);
         $awal = Carbon::create(null, $dateAwal->month, $dateAwal->day);
         $akhir = Carbon::create(null, $dateAkhir->month, $dateAkhir->day);
-        $data = $this->jemaatService->getPernikahan($awal, $akhir, $user->unit->first()->id);
+        $data = $this->jemaatService->getPernikahan($awal, $akhir, $user->unit->first()->id, limit: $limit);
         return \App\Helpers\JsonFormatter::success($data, message: 'Data pelayanan pernikahan unit.');
     }
 
@@ -44,7 +44,7 @@ class PelayananController extends Controller
         $dateAkhir = $dateAwal->addDays(60);
         $awal = Carbon::create(null, $dateAwal->month, $dateAwal->day);
         $akhir = Carbon::create(null, $dateAkhir->month, $dateAkhir->day);
-        $data = $this->jemaatService->getKelahiran($awal, $akhir, $user->unit->first()->id);
+        $data = $this->jemaatService->getKelahiran($awal, $akhir, $user->unit->first()->id,  limit: $limit);
         return \App\Helpers\JsonFormatter::success($data, message: 'Data pelayanan kelahiran unit.');
     }
 }

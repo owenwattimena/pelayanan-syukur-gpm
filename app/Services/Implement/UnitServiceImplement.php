@@ -39,8 +39,8 @@ class UnitServiceImplement implements UnitService
         return $this->unitRepo->getTotal(idSektor: $idSektor);
     }
 
-    public function getTotalPengurus(?int $idSektor = null): int
+    public function getTotalPengurus(?array $idsUnit = null): int
     {
-        return $this->unitRepo->getTotalPengurus(idSektor: $idSektor);
+        return $this->unitRepo->getTotalPengurus(idsUnit: $idsUnit);
     }
 }

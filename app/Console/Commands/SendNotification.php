@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Pengaturan;
 use App\Services\PushNotificationService;
 use Illuminate\Console\Command;
 
@@ -37,7 +38,22 @@ class SendNotification extends Command
      */
     public function handle()
     {
-        $this->pushNotifService->pushNotificationPernikahan(38);
+
+        $pengaturan = Pengaturan::get()->first();
+        $arr = explode(",", $pengaturan->durasi_notifikasi);
+        foreach ($arr as $key => $value) {
+            $this->pushNotifService->pushNotificationKelahiran($value); // push notif 7 hari lagi kelahiran
+            $this->pushNotifService->pushNotificationPernikahan($value);
+        }
+
+        // $this->pushNotifService->pushNotificationKelahiran(7); // push notif 7 hari lagi kelahiran
+        // $this->pushNotifService->pushNotificationPernikahan(7);  // push notif 7 hari lagi pernikahan
+
+        // $this->pushNotifService->pushNotificationKelahiran(3); // push notif 3 hari lagi kelahiran
+        // $this->pushNotifService->pushNotificationPernikahan(3);  // push notif 3 hari lagi pernikahan
+
+        // $this->pushNotifService->pushNotificationKelahiran(1); // push notif 1 hari lagi kelahiran
+        // $this->pushNotifService->pushNotificationPernikahan(1);  // push notif 1 hari lagi pernikahan
 
         return Command::SUCCESS;
     }

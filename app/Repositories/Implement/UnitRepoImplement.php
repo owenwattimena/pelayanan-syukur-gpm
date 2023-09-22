@@ -51,14 +51,14 @@ class UnitRepoImplement implements UnitRepository
     }
     public function getTotal(?int $idSektor = null):int
     {
+        if($idSektor !=null) return $this->unit->where('id_sektor', $idSektor)->count();
         return $this->unit->count();
     }
-    public function getTotalPengurus(?int $idSektor = null): int
+    public function getTotalPengurus(?array $idsUnit = null): int
     {
-        if($idSektor != null)
+        if($idsUnit != null)
         {
-            $unit = $this->unit->where('id_sektor', $idSektor)->first();
-            return $unit->pengurus->count();
+            return $this->pengurusUnit->whereIn('id_unit', $idsUnit)->count();
         }
         return $this->pengurusUnit->count();
     }
